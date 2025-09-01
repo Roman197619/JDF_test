@@ -21,15 +21,13 @@ ENGINE = MergeTree(_inserted_at)
 ORDER BY (craft);
 
 -- Materialized View для автоматического парсинга JSON
-CREATE MATERIALIZED VIEW IF NOT EXISTS JDF_DATABASE.mv
-TO JDF_DATABASE.PARSED_TABLE 
-AS
+CREATE MATERIALIZED VIEW JDF_DATABASE.mv
+TO JDF_DATABASE.PARSED_TABLE AS
 SELECT
-    JSONExtractString(raw_json, 'craft') AS craft,
-    JSONExtractString(raw_json, 'name') AS name,
+    ifNull(JSONExtractString(raw_json, 'craft'), 'unknown') AS craft,
+    ifNull(JSONExtractString(raw_json, 'name'), 'unknown') AS name, 
     inserted_at AS _inserted_at
 FROM JDF_DATABASE.RAW_TABLE;
-
 
 
 SELECT 
