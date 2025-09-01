@@ -12,8 +12,8 @@ pip install -r scripts/requirements.txt
 python scripts/load.py
 
 4. **Настройка DBT:**
-cp dbt-project/profiles.yml.example ~/.dbt/profiles.yml
-# Отредактируйте ~/.dbt/profiles.yml при необходимотси
+cp dbt/profiles.yml
+Отредактируйте ~/.dbt/profiles.yml при необходимотси
 
 5. **Запуск DBT:**
 cd ./jdf_dbt_project
