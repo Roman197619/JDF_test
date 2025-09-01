@@ -10,17 +10,17 @@ CREATE TABLE IF NOT EXISTS JDF_DATABASE.RAW_TABLE
 ENGINE = ReplacingMergeTree(inserted_at)
 ORDER BY (raw_json);  
 
--- Таблица для распарсенных данных с дедупликацией по имени и кораблю
+-- Таблица для распарсенных данных без дедупликацией с сортирdкой по  кораблю для быстрого поиска по короблю
 CREATE TABLE IF NOT EXISTS JDF_DATABASE.PARSED_TABLE
 (
     `craft` String,
     `name` String,
     `_inserted_at` DateTime
 )
-ENGINE = ReplacingMergeTree(_inserted_at)
-ORDER BY (name, craft);
+ENGINE = MergeTree(_inserted_at)
+ORDER BY (craft);
 
--- Materialized View для автоматического парсинга JSON и дедупликации
+-- Materialized View для автоматического парсинга JSON
 CREATE MATERIALIZED VIEW IF NOT EXISTS JDF_DATABASE.mv
 TO JDF_DATABASE.PARSED_TABLE 
 AS
@@ -30,11 +30,6 @@ SELECT
     inserted_at AS _inserted_at
 FROM JDF_DATABASE.RAW_TABLE;
 
--- Представление для просмотра дедублицированных данных (последняя версия каждого астронавта)
-CREATE VIEW IF NOT EXISTS JDF_DATABASE.PARSED_TABLE_latest AS
-SELECT *
-FROM JDF_DATABASE.PARSED_TABLE
-FINAL;  
 
 
 SELECT 
