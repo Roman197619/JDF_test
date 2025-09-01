@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: JDF_DATABASE
+    database: JDF_DATABASE
+    schema: JDF_DATABASE
+    tables:
+      - name: 'PARSED_TABLE'

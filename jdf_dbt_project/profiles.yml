@@ -1,0 +1,14 @@
+# не добавляется на гит
+jdf_dbt_project:
+  target: dev
+  outputs:
+    dev:
+      type: clickhouse
+      protocol: http
+      host: "localhost"
+      port: 18123
+      user: "admin"
+      password: "changeme"
+      database: "JDF_DATABASE"
+      schema: "JDF_DATABASE"
+      threads: 1
